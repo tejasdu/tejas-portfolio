@@ -65,7 +65,7 @@ const experiences = [
     description:
       "Developed backend software on our app to support user authentication, profiles, and Bluetooth integration with neuroprosthetic arms, delivering customizable functionality for pediatric patients. Utilized Scikit-learn, TensorFlow, and pandas to train a model on high-stress movements via EEG activation trends for different biomechanical movements to optimize prosthetic arm design.",
     technologies: ["Node.js", "Express", "Bluetooth", "Python", "TensorFlow", "Scikit-learn", "Pandas", "Machine Learning"],
-    link: "https://neuroprosthetics.engin.umich.edu",
+    link: "https://www.umneuroprosthetics.org/",
   },
   {
     company: "Spire Investment Partners, LLC",
