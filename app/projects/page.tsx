@@ -1,3 +1,6 @@
+"use client"
+
+import React from "react"
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
 import { Card } from "@/components/ui/card"
@@ -5,61 +8,44 @@ import { Badge } from "@/components/ui/badge"
 import { ExternalLink, Github } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
+import { useScrollAnimation } from "@/lib/use-scroll-animation"
+
+function AnimatedSection({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
+  const { ref, isVisible } = useScrollAnimation()
+
+  return (
+    <div
+      ref={ref}
+      className={`transition-all duration-700 ease-out ${
+        isVisible
+          ? "opacity-100 translate-y-0"
+          : "opacity-0 translate-y-8"
+      }`}
+      style={{ transitionDelay: `${delay}ms` }}
+    >
+      {children}
+    </div>
+  )
+}
 
 const projects = [
   {
-    title: "E-Commerce Platform",
+    title: "Selectaurant",
     description:
-      "A full-stack e-commerce platform with real-time inventory management, payment processing, and admin dashboard. Built with modern web technologies for optimal performance and user experience.",
-    image: "/modern-ecommerce-dashboard.png",
-    technologies: ["Next.js", "TypeScript", "Stripe", "PostgreSQL", "Tailwind CSS"],
-    liveLink: "https://project1.com",
-    githubLink: "https://github.com/yourusername/project1",
+      "A multiplayer web application that helps groups decide where to eat together. Users create custom lobbies with unique codes, filter restaurants using the Google Places API, and vote on their preferences. Features real-time synchronization via Socket.io, server-side vote calculation, and a mobile-responsive design with an intuitive carousel view of top restaurant choices.",
+    image: "/placeholder.svg",
+    technologies: ["Next.js", "Node.js", "TypeScript", "React.js", "Tailwind CSS", "Supabase", "Socket.io", "Leaflet", "Google Places API", "Railway"],
+    liveLink: "https://selectaraunt.up.railway.app/",
+    githubLink: "https://github.com/MishanGagnon/restaurant",
   },
   {
-    title: "Task Management App",
+    title: "UMazing",
     description:
-      "Collaborative task management application with real-time updates, team workspaces, and advanced filtering. Features drag-and-drop interface and customizable workflows.",
-    image: "/task-management-app.png",
-    technologies: ["React", "Node.js", "Socket.io", "MongoDB", "Redux"],
-    liveLink: "https://project2.com",
-    githubLink: "https://github.com/yourusername/project2",
-  },
-  {
-    title: "Weather Dashboard",
-    description:
-      "Beautiful weather application with location-based forecasts, interactive maps, and detailed analytics. Integrates multiple weather APIs for accurate predictions.",
-    image: "/weather-dashboard.png",
-    technologies: ["Vue.js", "Express", "OpenWeather API", "Chart.js"],
-    liveLink: "https://project3.com",
-    githubLink: "https://github.com/yourusername/project3",
-  },
-  {
-    title: "Portfolio CMS",
-    description:
-      "Content management system designed for creative professionals to showcase their work. Features customizable templates, media management, and SEO optimization.",
-    image: "/portfolio-cms-interface.jpg",
-    technologies: ["Next.js", "Sanity.io", "Vercel", "TypeScript"],
-    liveLink: "https://project4.com",
-    githubLink: "https://github.com/yourusername/project4",
-  },
-  {
-    title: "AI Chat Application",
-    description:
-      "Real-time chat application with AI-powered features including message suggestions, sentiment analysis, and smart replies. Built with modern real-time technologies.",
-    image: "/ai-chat-application-interface.jpg",
-    technologies: ["React", "Firebase", "OpenAI API", "Material-UI"],
-    liveLink: "https://project5.com",
-    githubLink: "https://github.com/yourusername/project5",
-  },
-  {
-    title: "Fitness Tracker",
-    description:
-      "Mobile-responsive fitness tracking application with workout planning, progress visualization, and social features. Integrates with popular fitness APIs.",
-    image: "/fitness-tracker-app-dashboard.png",
-    technologies: ["React Native", "Node.js", "PostgreSQL", "Chart.js"],
-    liveLink: "https://project6.com",
-    githubLink: "https://github.com/yourusername/project6",
+      "An AI-powered academic advisor that helps students plan their course selection using their course audit checklist. Built at MHacks 24, this tool uses OpenAI's API with multi-step tool calls to provide personalized course recommendations. Features custom streaming React components for real-time responses and web scraping integration with course audits and Atlas to deliver context-aware guidance.",
+    image: "/placeholder.svg",
+    technologies: ["Next.js", "Node.js", "React", "TypeScript", "Python", "PostgreSQL", "OpenAI API", "Railway", "Vercel"],
+    liveLink: "https://mhack2024-production.up.railway.app/",
+    githubLink: "https://github.com/MishanGagnon/mhacks2024",
   },
 ]
 
@@ -69,14 +55,17 @@ export default function ProjectsPage() {
       <Navigation />
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16">
-        <div className="mb-16">
-          <h1 className="text-5xl font-bold mb-4 text-balance">Projects</h1>
-          <p className="text-xl text-muted-foreground text-pretty">A collection of things I've built</p>
-        </div>
+        <AnimatedSection>
+          <div className="mb-16">
+            <h1 className="text-5xl font-bold mb-4 text-balance">Projects</h1>
+            <p className="text-xl text-muted-foreground text-pretty">A collection of things I've built</p>
+          </div>
+        </AnimatedSection>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {projects.map((project, index) => (
-            <Card key={index} className="overflow-hidden bg-card hover:bg-card/80 transition-colors group">
+            <AnimatedSection key={index} delay={index * 100}>
+              <Card className="overflow-hidden bg-card hover:bg-card/80 transition-colors group">
               <div className="relative h-48 bg-secondary overflow-hidden">
                 <Image
                   src={project.image || "/placeholder.svg"}
@@ -121,7 +110,8 @@ export default function ProjectsPage() {
                   ))}
                 </div>
               </div>
-            </Card>
+              </Card>
+            </AnimatedSection>
           ))}
         </div>
       </main>
